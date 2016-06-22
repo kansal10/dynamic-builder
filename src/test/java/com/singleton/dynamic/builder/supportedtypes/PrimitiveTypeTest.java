@@ -8,162 +8,188 @@ import org.junit.Test;
 import com.singleton.dynamic.builder.DynamicBuilderFactory;
 
 /**
- * Test class to ensure that all primitive types are able to be set and retrieved.
+ * Test class to ensure that all primitive types are able to be set and
+ * retrieved.
  * 
  * @author Dustin Singleton
  */
-public class PrimitiveTypeTest {
-	private final DynamicBuilderFactory factory = new DynamicBuilderFactory();
+public class PrimitiveTypeTest
+{
+    private final DynamicBuilderFactory factory = new DynamicBuilderFactory();
 
-	@Test
-	public void testByteValues() {
-		byte value = 1;
+    @Test
+    public void testByteValues()
+    {
+        byte value = 1;
 
-		ByteBuilder builder = factory.createBuilderForClass(ByteBuilder.class);
+        ByteBuilder builder = factory.createBuilderForClass(ByteBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	@Test
-	public void testCharValue() {
-		char value = 'b';
+    @Test
+    public void testCharValue()
+    {
+        char value = 'b';
 
-		CharBuilder builder = factory.createBuilderForClass(CharBuilder.class);
+        CharBuilder builder = factory.createBuilderForClass(CharBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	@Test
-	public void testShortValue() {
-		short value = 1;
+    @Test
+    public void testShortValue()
+    {
+        short value = 1;
 
-		ShortBuilder builder = factory.createBuilderForClass(ShortBuilder.class);
+        ShortBuilder builder = factory.createBuilderForClass(ShortBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	@Test
-	public void testIntValue() {
-		int value = 1;
+    @Test
+    public void testIntValue()
+    {
+        int value = 1;
 
-		IntBuilder builder = factory.createBuilderForClass(IntBuilder.class);
+        IntBuilder builder = factory.createBuilderForClass(IntBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	@Test
-	public void testLongValue() {
-		long value = 1L;
+    @Test
+    public void testLongValue()
+    {
+        long value = 1L;
 
-		LongBuilder builder = factory.createBuilderForClass(LongBuilder.class);
+        LongBuilder builder = factory.createBuilderForClass(LongBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	@Test
-	public void testFloatValue() {
-		float value = 1.1f;
+    @Test
+    public void testFloatValue()
+    {
+        float value = 1.1f;
 
-		FloatBuilder builder = factory.createBuilderForClass(FloatBuilder.class);
+        FloatBuilder builder = factory.createBuilderForClass(FloatBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	@Test
-	public void testDoubleValue() {
-		double value = 1.1;
+    @Test
+    public void testDoubleValue()
+    {
+        double value = 1.1;
 
-		DoubleBuilder builder = factory.createBuilderForClass(DoubleBuilder.class);
+        DoubleBuilder builder = factory.createBuilderForClass(DoubleBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	@Test
-	public void testBooleanValue() {
-		boolean value = true;
+    @Test
+    public void testBooleanValue()
+    {
+        boolean value = true;
 
-		BooleanBuilder builder = factory.createBuilderForClass(BooleanBuilder.class);
+        BooleanBuilder builder = factory.createBuilderForClass(BooleanBuilder.class);
 
-		assertThat(builder.value(value).build().getValue(), is(value));
-	}
+        assertThat(builder.value(value).build().getValue(), is(value));
+    }
 
-	private interface BooleanBuilder {
-		BooleanBuilder value(boolean id);
+    private interface BooleanBuilder
+    {
+        BooleanBuilder value(boolean id);
 
-		BooleanObject build();
-	}
+        BooleanObject build();
+    }
 
-	private interface BooleanObject {
-		boolean getValue();
-	}
+    private interface BooleanObject
+    {
+        boolean getValue();
+    }
 
-	private interface DoubleBuilder {
-		DoubleBuilder value(double id);
+    private interface DoubleBuilder
+    {
+        DoubleBuilder value(double id);
 
-		DoubleObject build();
-	}
+        DoubleObject build();
+    }
 
-	private interface DoubleObject {
-		double getValue();
-	}
+    private interface DoubleObject
+    {
+        double getValue();
+    }
 
-	private interface FloatBuilder {
-		FloatBuilder value(float id);
+    private interface FloatBuilder
+    {
+        FloatBuilder value(float id);
 
-		FloatObject build();
-	}
+        FloatObject build();
+    }
 
-	private interface FloatObject {
-		float getValue();
-	}
+    private interface FloatObject
+    {
+        float getValue();
+    }
 
-	private interface LongBuilder {
-		LongBuilder value(long id);
+    private interface LongBuilder
+    {
+        LongBuilder value(long id);
 
-		LongObject build();
-	}
+        LongObject build();
+    }
 
-	private interface LongObject {
-		long getValue();
-	}
+    private interface LongObject
+    {
+        long getValue();
+    }
 
-	private interface IntBuilder {
-		IntBuilder value(int id);
+    private interface IntBuilder
+    {
+        IntBuilder value(int id);
 
-		IntObject build();
-	}
+        IntObject build();
+    }
 
-	private interface IntObject {
-		int getValue();
-	}
+    private interface IntObject
+    {
+        int getValue();
+    }
 
-	private interface ShortBuilder {
-		ShortBuilder value(short id);
+    private interface ShortBuilder
+    {
+        ShortBuilder value(short id);
 
-		ShortObject build();
-	}
+        ShortObject build();
+    }
 
-	private interface ShortObject {
-		short getValue();
-	}
+    private interface ShortObject
+    {
+        short getValue();
+    }
 
-	private interface CharBuilder {
-		CharBuilder value(char id);
+    private interface CharBuilder
+    {
+        CharBuilder value(char id);
 
-		CharObject build();
-	}
+        CharObject build();
+    }
 
-	private interface CharObject {
-		char getValue();
-	}
+    private interface CharObject
+    {
+        char getValue();
+    }
 
-	private interface ByteBuilder {
-		ByteBuilder value(byte id);
+    private interface ByteBuilder
+    {
+        ByteBuilder value(byte id);
 
-		ByteObject build();
-	}
+        ByteObject build();
+    }
 
-	private interface ByteObject {
-		byte getValue();
-	}
+    private interface ByteObject
+    {
+        byte getValue();
+    }
 }

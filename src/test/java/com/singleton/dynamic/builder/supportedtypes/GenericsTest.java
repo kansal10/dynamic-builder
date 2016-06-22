@@ -15,28 +15,32 @@ import com.singleton.dynamic.builder.DynamicBuilderFactory;
  *
  * @author Dustin Singleton
  */
-public class GenericsTest {
-	private final DynamicBuilderFactory factory = new DynamicBuilderFactory();
-	
-	@Test
-	public void testList() {
-		List<String> stringList = new ArrayList<String>();
-		stringList.add("a");
-		stringList.add("b");
-		
-		ListBuilder builder = factory.createBuilderForClass(ListBuilder.class);
-		builder.stringList(stringList);
-		
-		assertThat(builder.build().getStringList(), is(stringList));
-	}
-	
-	private interface ListBuilder {
-		ListBuilder stringList(List<String> stringList);
-		
-		ListBuiltObject build();
-	}
-	
-	private interface ListBuiltObject {
-		List<String> getStringList();
-	}
+public class GenericsTest
+{
+    private final DynamicBuilderFactory factory = new DynamicBuilderFactory();
+
+    @Test
+    public void testList()
+    {
+        List<String> stringList = new ArrayList<String>();
+        stringList.add("a");
+        stringList.add("b");
+
+        ListBuilder builder = factory.createBuilderForClass(ListBuilder.class);
+        builder.stringList(stringList);
+
+        assertThat(builder.build().getStringList(), is(stringList));
+    }
+
+    private interface ListBuilder
+    {
+        ListBuilder stringList(List<String> stringList);
+
+        ListBuiltObject build();
+    }
+
+    private interface ListBuiltObject
+    {
+        List<String> getStringList();
+    }
 }
