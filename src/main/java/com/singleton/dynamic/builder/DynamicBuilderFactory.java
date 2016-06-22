@@ -83,10 +83,10 @@ public class DynamicBuilderFactory
 
             if ("byte".equals(returnTypeName))
             {
-                return 0;
+                return (byte) 0;
             } else if ("short".equals(returnTypeName))
             {
-                return 0;
+                return (short) 0;
             } else if ("int".equals(returnTypeName))
             {
                 return 0;
@@ -101,7 +101,7 @@ public class DynamicBuilderFactory
                 return 0.0;
             } else if ("char".equals(returnTypeName))
             {
-                return "\u0000";
+                return '\u0000';
             } else if ("boolean".equals(returnTypeName))
             {
                 return false;
