@@ -1,4 +1,4 @@
-package com.singleton.dynamic.builder.supportedtypes;
+package com.singleton.dynamic.builder.integration.supportedtypes;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

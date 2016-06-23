@@ -4,6 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+/**
+ * Test class for {@link DynamicBuilderFactory}.
+ * 
+ * @author Dustin Singleton
+ */
 public class DynamicBuilderFactoryTest
 {
     @Test
@@ -19,12 +24,6 @@ public class DynamicBuilderFactoryTest
         assertEquals(2L, appointment.getAppointmentId());
 
         assertEquals("Appt A", appointment.getDisplay());
-    }
-
-    @Test
-    public void testBuilder_unsetPrimitiveValues() throws Exception
-    {
-
     }
 
     public interface AppointmentBuilder

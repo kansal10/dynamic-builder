@@ -1,4 +1,4 @@
-package com.singleton.dynamic.builder.defaults;
+package com.singleton.dynamic.builder.integration.defaults;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
