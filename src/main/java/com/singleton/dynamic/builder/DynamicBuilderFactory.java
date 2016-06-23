@@ -1,10 +1,13 @@
 package com.singleton.dynamic.builder;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.singleton.dynamic.builder.annotation.NotNull;
 
 public class DynamicBuilderFactory
 {
@@ -25,7 +28,9 @@ public class DynamicBuilderFactory
         {
             if (!method.getName().equals("build") && args != null && args.length == 1)
             {
-                valueMap.put(method.getName(), args[0]);
+                Object parameterValue = args[0];
+                performValidation(method, parameterValue);
+                valueMap.put(method.getName(), parameterValue);
                 return proxy;
             } else if (method.getName().equals("build") && args == null)
             {
@@ -36,6 +41,21 @@ public class DynamicBuilderFactory
 
             System.out.println("Invalid method invoked " + method.getName());
             return null;
+        }
+
+        private void performValidation(Method method, Object parameterValue)
+        {
+            Annotation[] annotations = method.getParameterAnnotations()[0];
+            for (Annotation singleAnnotation : annotations)
+            {
+                if (singleAnnotation.annotationType().equals(NotNull.class))
+                {
+                    if (parameterValue == null)
+                    {
+                        throw new IllegalArgumentException(method.getName() + " was provided null, but non null values are required");
+                    }
+                }
+            }
         }
 
     }
