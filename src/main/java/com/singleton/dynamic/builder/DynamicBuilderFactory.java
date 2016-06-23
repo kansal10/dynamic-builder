@@ -7,7 +7,8 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.singleton.dynamic.builder.annotation.NotNull;
+import com.singleton.dynamic.builder.annotation.Not;
+import com.singleton.dynamic.builder.annotation.Validator;
 
 public class DynamicBuilderFactory
 {
@@ -16,7 +17,8 @@ public class DynamicBuilderFactory
         InvocationHandler handler = new BuilderInvocationHandler();
 
         @SuppressWarnings("unchecked")
-        T proxy = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] { clazz }, handler);
+        T proxy = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] { clazz },
+                handler);
         return proxy;
     }
 
@@ -32,11 +34,13 @@ public class DynamicBuilderFactory
                 performValidation(method, parameterValue);
                 valueMap.put(method.getName(), parameterValue);
                 return proxy;
-            } else if (method.getName().equals("build") && args == null)
+            }
+            else if (method.getName().equals("build") && args == null)
             {
                 Class<?> returnClass = method.getReturnType();
                 InvocationHandler handler = new BuiltObjectInvocationHandler(valueMap);
-                return Proxy.newProxyInstance(returnClass.getClassLoader(), new Class<?>[] { returnClass }, handler);
+                return Proxy.newProxyInstance(returnClass.getClassLoader(),
+                        new Class<?>[] { returnClass }, handler);
             }
 
             System.out.println("Invalid method invoked " + method.getName());
@@ -48,12 +52,35 @@ public class DynamicBuilderFactory
             Annotation[] annotations = method.getParameterAnnotations()[0];
             for (Annotation singleAnnotation : annotations)
             {
-                if (singleAnnotation.annotationType().equals(NotNull.class))
+                if (singleAnnotation.annotationType().equals(Not.class))
                 {
-                    if (parameterValue == null)
+                    Not notAnnotation = (Not) singleAnnotation;
+                    for (Validator singleValidator : notAnnotation.value())
                     {
-                        throw new IllegalArgumentException(method.getName() + " was provided null, but non null values are required");
+                        switch (singleValidator)
+                        {
+                            case NULL:
+                                if (parameterValue == null)
+                                {
+                                    throw new IllegalArgumentException(method.getName()
+                                            + " was provided null, but non null values are required");
+                                }
+                                break;
+                            case EMPTY:
+                                if (String.class.isAssignableFrom(parameterValue.getClass()))
+                                {
+                                    if (((String)parameterValue).isEmpty())
+                                    {
+                                        throw new IllegalArgumentException(method.getName()
+                                                + " was provided empty, but non empty values are required");
+                                    }
+                                }
+                                break;
+                                default:
+                                    throw new IllegalStateException("Usage of unsupported validator detected");
+                        }
                     }
+
                 }
             }
         }
@@ -104,25 +131,32 @@ public class DynamicBuilderFactory
             if ("byte".equals(returnTypeName))
             {
                 return (byte) 0;
-            } else if ("short".equals(returnTypeName))
+            }
+            else if ("short".equals(returnTypeName))
             {
                 return (short) 0;
-            } else if ("int".equals(returnTypeName))
+            }
+            else if ("int".equals(returnTypeName))
             {
                 return 0;
-            } else if ("long".equals(returnTypeName))
+            }
+            else if ("long".equals(returnTypeName))
             {
                 return 0L;
-            } else if ("float".equals(returnTypeName))
+            }
+            else if ("float".equals(returnTypeName))
             {
                 return 0.0f;
-            } else if ("double".equals(returnTypeName))
+            }
+            else if ("double".equals(returnTypeName))
             {
                 return 0.0;
-            } else if ("char".equals(returnTypeName))
+            }
+            else if ("char".equals(returnTypeName))
             {
                 return '\u0000';
-            } else if ("boolean".equals(returnTypeName))
+            }
+            else if ("boolean".equals(returnTypeName))
             {
                 return false;
             }
