@@ -8,6 +8,13 @@ import org.junit.Test;
 import com.singleton.dynamic.builder.DynamicBuilderFactory;
 import com.singleton.dynamic.builder.annotation.Not;
 
+/**
+ * <p>
+ * Test class to ensure that {@link Not} works with empty and {@code null}.
+ * </p>
+ *
+ * @author Dustin Singleton
+ */
 public class NotNullOrEmptyTest
 {
     private final DynamicBuilderFactory factory = new DynamicBuilderFactory();
@@ -26,7 +33,6 @@ public class NotNullOrEmptyTest
 
     private interface NotNullOrEmptyBuilder
     {
-
         NotNullOrEmptyBuilder stringValue(@Not({ NULL, EMPTY }) String value);
 
         NotNullOrEmptyBuiltObject build();

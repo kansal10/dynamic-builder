@@ -22,7 +22,6 @@ public class DynamicBuilderFactoryTest
         Appointment appointment = builder.build();
 
         assertEquals(2L, appointment.getAppointmentId());
-
         assertEquals("Appt A", appointment.getDisplay());
     }
 
