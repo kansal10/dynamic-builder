@@ -12,6 +12,7 @@ import static com.singleton.dynamic.builder.annotation.Validator.*;
  * 
  * @author Dustin Singleton
  */
+@SuppressWarnings("javadoc")
 public class NotNullTest
 {
     private final DynamicBuilderFactory factory = new DynamicBuilderFactory();

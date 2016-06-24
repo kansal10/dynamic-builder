@@ -13,6 +13,7 @@ import com.singleton.dynamic.builder.DynamicBuilderFactory;
  * 
  * @author Dustin Singleton
  */
+@SuppressWarnings("javadoc")
 public class PrimitiveValuesDefaultsTest
 {
     private boolean uninitializedBooleanValue;

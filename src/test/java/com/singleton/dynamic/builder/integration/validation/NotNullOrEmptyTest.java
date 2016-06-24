@@ -15,6 +15,7 @@ import com.singleton.dynamic.builder.annotation.Not;
  *
  * @author Dustin Singleton
  */
+@SuppressWarnings("javadoc")
 public class NotNullOrEmptyTest
 {
     private final DynamicBuilderFactory factory = new DynamicBuilderFactory();
