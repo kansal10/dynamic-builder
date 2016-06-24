@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.singleton.dynamic.builder.annotation.Not;
-import com.singleton.dynamic.builder.annotation.Validator;
+import com.singleton.dynamic.builder.validation.NotParameterValidator;
 
 public class DynamicBuilderFactory
 {
@@ -49,42 +49,18 @@ public class DynamicBuilderFactory
 
         private void performValidation(Method method, Object parameterValue)
         {
-            Annotation[] annotations = method.getParameterAnnotations()[0];
-            for (Annotation singleAnnotation : annotations)
+            // pull off the annotations for the first parameter, given that 
+            for (Annotation singleAnnotation : method.getParameterAnnotations()[0])
             {
                 if (singleAnnotation.annotationType().equals(Not.class))
                 {
-                    Not notAnnotation = (Not) singleAnnotation;
-                    for (Validator singleValidator : notAnnotation.value())
+                    for (NotParameterValidator singleValidator : ((Not) singleAnnotation).value())
                     {
-                        switch (singleValidator)
-                        {
-                            case NULL:
-                                if (parameterValue == null)
-                                {
-                                    throw new IllegalArgumentException(method.getName()
-                                            + " was provided null, but non null values are required");
-                                }
-                                break;
-                            case EMPTY:
-                                if (String.class.isAssignableFrom(parameterValue.getClass()))
-                                {
-                                    if (((String)parameterValue).isEmpty())
-                                    {
-                                        throw new IllegalArgumentException(method.getName()
-                                                + " was provided empty, but non empty values are required");
-                                    }
-                                }
-                                break;
-                                default:
-                                    throw new IllegalStateException("Usage of unsupported validator detected");
-                        }
+                        singleValidator.validate(parameterValue, method);
                     }
-
                 }
             }
         }
-
     }
 
     private class BuiltObjectInvocationHandler implements InvocationHandler

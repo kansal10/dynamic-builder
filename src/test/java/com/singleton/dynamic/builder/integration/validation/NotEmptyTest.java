@@ -1,7 +1,7 @@
 package com.singleton.dynamic.builder.integration.validation;
 
-import static com.singleton.dynamic.builder.annotation.Validator.EMPTY;
-import static com.singleton.dynamic.builder.annotation.Validator.NULL;
+import static com.singleton.dynamic.builder.validation.NotParameterValidator.EMPTY;
+import static com.singleton.dynamic.builder.validation.NotParameterValidator.NULL;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
