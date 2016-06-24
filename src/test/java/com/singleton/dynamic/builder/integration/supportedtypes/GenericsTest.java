@@ -15,6 +15,7 @@ import com.singleton.dynamic.builder.DynamicBuilderFactory;
  *
  * @author Dustin Singleton
  */
+@SuppressWarnings("javadoc")
 public class GenericsTest
 {
     private final DynamicBuilderFactory factory = new DynamicBuilderFactory();
@@ -36,7 +37,7 @@ public class GenericsTest
     public void testGenericObject()
     {
         @SuppressWarnings("unchecked")
-        GenericBuilder<String> builder = (GenericBuilder<String>) factory.createBuilderForClass(GenericBuilder.class);
+        GenericBuilder<String> builder = factory.createBuilderForClass(GenericBuilder.class);
 
         GenericBuiltObject<String> builtObject = builder.value("string").build();
 

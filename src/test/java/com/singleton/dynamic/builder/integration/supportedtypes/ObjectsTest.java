@@ -12,6 +12,7 @@ import com.singleton.dynamic.builder.DynamicBuilderFactory;
  * 
  * @author Dustin Singleton
  */
+@SuppressWarnings("javadoc")
 public class ObjectsTest
 {
     private final DynamicBuilderFactory factory = new DynamicBuilderFactory();

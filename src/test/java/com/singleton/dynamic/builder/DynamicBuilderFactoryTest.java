@@ -9,6 +9,7 @@ import org.junit.Test;
  * 
  * @author Dustin Singleton
  */
+@SuppressWarnings("javadoc")
 public class DynamicBuilderFactoryTest
 {
     @Test
