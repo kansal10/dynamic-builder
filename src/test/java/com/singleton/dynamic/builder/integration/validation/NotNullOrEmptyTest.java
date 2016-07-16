@@ -25,7 +25,7 @@ public class NotNullOrEmptyTest
     {
         factory.createBuilderForClass(NotNullOrEmptyBuilder.class).stringValue(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testNotNull_emptyValue()
     {

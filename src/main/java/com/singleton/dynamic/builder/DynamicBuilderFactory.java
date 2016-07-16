@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.singleton.dynamic.builder.annotation.Not;
+import com.singleton.dynamic.builder.defaults.DefaultProvider;
 import com.singleton.dynamic.builder.validation.NotParameterValidator;
 
 public class DynamicBuilderFactory
@@ -17,8 +18,7 @@ public class DynamicBuilderFactory
         InvocationHandler handler = new BuilderInvocationHandler();
 
         @SuppressWarnings("unchecked")
-        T proxy = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] { clazz },
-                handler);
+        T proxy = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] { clazz }, handler);
         return proxy;
     }
 
@@ -39,8 +39,7 @@ public class DynamicBuilderFactory
             {
                 Class<?> returnClass = method.getReturnType();
                 InvocationHandler handler = new BuiltObjectInvocationHandler(valueMap);
-                return Proxy.newProxyInstance(returnClass.getClassLoader(),
-                        new Class<?>[] { returnClass }, handler);
+                return Proxy.newProxyInstance(returnClass.getClassLoader(), new Class<?>[] { returnClass }, handler);
             }
 
             System.out.println("Invalid method invoked " + method.getName());
@@ -49,7 +48,7 @@ public class DynamicBuilderFactory
 
         private void performValidation(Method method, Object parameterValue)
         {
-            // pull off the annotations for the first parameter, given that 
+            // pull off the annotations for the first parameter, given that
             for (Annotation singleAnnotation : method.getParameterAnnotations()[0])
             {
                 if (singleAnnotation.annotationType().equals(Not.class))
@@ -65,6 +64,7 @@ public class DynamicBuilderFactory
 
     private class BuiltObjectInvocationHandler implements InvocationHandler
     {
+        private final DefaultProvider defaultProvider = new DefaultProvider();
         private final Map<String, Object> valueMap;
 
         public BuiltObjectInvocationHandler(Map<String, Object> valueMap)
@@ -91,52 +91,7 @@ public class DynamicBuilderFactory
                 return valueMap.get(method.getName());
             }
 
-            Class<?> returnType = method.getReturnType();
-            if (returnType.isPrimitive())
-            {
-                return getPrimitiveDefaultValue(returnType);
-            }
-
-            return null;
-        }
-
-        private Object getPrimitiveDefaultValue(Class<?> returnType)
-        {
-            String returnTypeName = returnType.getName();
-
-            if ("byte".equals(returnTypeName))
-            {
-                return (byte) 0;
-            }
-            else if ("short".equals(returnTypeName))
-            {
-                return (short) 0;
-            }
-            else if ("int".equals(returnTypeName))
-            {
-                return 0;
-            }
-            else if ("long".equals(returnTypeName))
-            {
-                return 0L;
-            }
-            else if ("float".equals(returnTypeName))
-            {
-                return 0.0f;
-            }
-            else if ("double".equals(returnTypeName))
-            {
-                return 0.0;
-            }
-            else if ("char".equals(returnTypeName))
-            {
-                return '\u0000';
-            }
-            else if ("boolean".equals(returnTypeName))
-            {
-                return false;
-            }
-            return null;
+            return defaultProvider.getDefaultValue(method);
         }
     }
 }
