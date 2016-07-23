@@ -52,7 +52,8 @@ public enum NotParameterValidator
                     throw new IllegalArgumentException(method.getName() + " was provided empty, but non empty values are required");
                 }
             }
-            else if (Collection.class.isAssignableFrom(objectToValidate.getClass()))
+
+            if (Collection.class.isAssignableFrom(objectToValidate.getClass()))
             {
                 if (((Collection<?>) objectToValidate).isEmpty())
                 {

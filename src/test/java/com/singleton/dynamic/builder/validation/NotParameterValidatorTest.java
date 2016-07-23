@@ -28,7 +28,8 @@ public class NotParameterValidatorTest
         {
             NotParameterValidator.NULL.validate(null, method);
             fail("Expected IllegalArgumentException but none was thrown when null validation occurred with null value");
-        } catch (IllegalArgumentException e)
+        }
+        catch (IllegalArgumentException e)
         {
             assertThat(e.getMessage(), is(method.getName() + " was provided null, but non null values are required"));
         }
@@ -59,7 +60,8 @@ public class NotParameterValidatorTest
         {
             NotParameterValidator.EMPTY.validate("", method);
             fail("Expected IllegalArgumentException but none was thrown when empty validation occurred with empty value");
-        } catch (IllegalArgumentException e)
+        }
+        catch (IllegalArgumentException e)
         {
             assertThat(e.getMessage(), is(method.getName() + " was provided empty, but non empty values are required"));
         }
@@ -85,7 +87,8 @@ public class NotParameterValidatorTest
         {
             NotParameterValidator.EMPTY.validate(longCollection, method);
             fail("Expected IllegalArgumentException but none was thrown when empty validation occurred with empty list");
-        } catch (IllegalArgumentException e)
+        }
+        catch (IllegalArgumentException e)
         {
             assertThat(e.getMessage(), is(method.getName() + " was provided an empty collection, but a non-empty collection is required"));
         }
@@ -104,10 +107,31 @@ public class NotParameterValidatorTest
         {
             NotParameterValidator.EMPTY.validate(Collections.<Long> emptyList(), method);
             fail("Expected IllegalArgumentException but none was thrown when empty validation occurred with empty list");
-        } catch (IllegalArgumentException e)
+        }
+        catch (IllegalArgumentException e)
         {
             assertThat(e.getMessage(), is(method.getName() + " was provided an empty collection, but a non-empty collection is required"));
         }
+    }
+
+    @Test
+    public void testNotEmpty_emptySetValue()
+    {
+        try
+        {
+            NotParameterValidator.EMPTY.validate(Collections.<Long> emptySet(), method);
+            fail("Expected IllegalArgumentException but none was thrown when empty validation occurred with empty set");
+        }
+        catch (IllegalArgumentException e)
+        {
+            assertThat(e.getMessage(), is(method.getName() + " was provided an empty collection, but a non-empty collection is required"));
+        }
+    }
+
+    @Test
+    public void testNotEmpty_setWithValues()
+    {
+        NotParameterValidator.EMPTY.validate(Collections.singleton(1L), method);
     }
 
     private interface InterfaceWithMethod
