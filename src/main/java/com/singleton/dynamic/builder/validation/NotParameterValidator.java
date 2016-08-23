@@ -2,6 +2,7 @@ package com.singleton.dynamic.builder.validation;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Map;
 
 import com.singleton.dynamic.builder.validation.exception.MismatchedValidatorTypeException;
 
@@ -58,6 +59,14 @@ public enum NotParameterValidator
                 if (((Collection<?>) objectToValidate).isEmpty())
                 {
                     throw new IllegalArgumentException(method.getName() + " was provided an empty collection, but a non-empty collection is required");
+                }
+            }
+
+            if (Map.class.isAssignableFrom(objectToValidate.getClass()))
+            {
+                if (((Map<?, ?>) objectToValidate).isEmpty())
+                {
+                    throw new IllegalArgumentException(method.getName() + " was provided an empty map, but a non-empty map is required");
                 }
             }
         }

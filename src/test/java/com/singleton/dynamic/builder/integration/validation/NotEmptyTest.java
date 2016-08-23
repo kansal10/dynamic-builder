@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -31,16 +33,16 @@ public class NotEmptyTest
     @Test
     public void testNotNull_nullStringValueAllowed()
     {
-        NotEmptyBuilder builder = factory.createBuilderForClass(NotEmptyBuilder.class);
+        NotEmptyStringBuilder builder = factory.createBuilderForClass(NotEmptyStringBuilder.class);
 
-        NotEmptyBuiltObject builtObject = builder.stringValue(null).build();
+        NotEmptyStringBuiltObject builtObject = builder.stringValue(null).build();
         assertThat(builtObject.getStringValue(), is((String) null));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNotAnnotation_emptyStringValueNotAllowed()
     {
-        factory.createBuilderForClass(NotEmptyBuilder.class).stringValue("");
+        factory.createBuilderForClass(NotEmptyStringBuilder.class).stringValue("");
     }
 
     @Test
@@ -61,21 +63,50 @@ public class NotEmptyTest
     public void testNotAnnotation_emptyListValueNotAllowed()
     {
         List<Long> emptyList = new ArrayList<Long>();
-        
+
         factory.createBuilderForClass(NotEmptyListBuilder.class).listValue(emptyList);
     }
-    
+
     @Test
     public void testNotAnnotation_nonEmptyListAllowed()
     {
         List<Long> list = Arrays.asList(1L);
-        
+
         NotEmptyListBuilder builder = factory.createBuilderForClass(NotEmptyListBuilder.class);
         NotEmptyListObject object = builder.listValue(list).build();
-        
+
         assertThat(object.getListValue(), is(list));
     }
+
+    @Test
+    public void testNotAnnotation_nullMapValueAllowed()
+    {
+        Map<Long, Long> map = null;
+
+        NotEmptyMapBuilder builder = factory.createBuilderForClass(NotEmptyMapBuilder.class);
+        NotEmptyMapObject object = builder.mapValue(map).build();
+
+        assertThat(object.getMapValue(), is(nullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotAnnotation_emptyMapNotAllowed()
+    {
+        factory.createBuilderForClass(NotEmptyMapBuilder.class).mapValue(Collections.<Long, Long> emptyMap());
+    }
     
+    @Test
+    public void testNotAnnotation_nonEmptyMapAllowed()
+    {
+        Map<Long, Long> map = new HashMap<Long, Long>();
+        map.put(1L, 2L);
+
+        NotEmptyMapBuilder builder = factory.createBuilderForClass(NotEmptyMapBuilder.class);
+        NotEmptyMapObject object = builder.mapValue(map).build();
+
+        assertThat(object.getMapValue(), is(map));
+    }
+
     private interface NotEmptyListBuilder
     {
         NotEmptyListBuilder listValue(@Not({ EMPTY }) List<Long> value);
@@ -87,7 +118,6 @@ public class NotEmptyTest
     {
         List<Long> getListValue();
     }
-
 
     private interface NotEmptyCollectionBuilder
     {
@@ -101,14 +131,26 @@ public class NotEmptyTest
         Collection<Long> getCollectionValue();
     }
 
-    private interface NotEmptyBuilder
+    private interface NotEmptyMapBuilder
     {
-        NotEmptyBuilder stringValue(@Not({ EMPTY }) String value);
+        NotEmptyMapBuilder mapValue(@Not({ EMPTY }) Map<Long, Long> value);
 
-        NotEmptyBuiltObject build();
+        NotEmptyMapObject build();
     }
 
-    private interface NotEmptyBuiltObject
+    private interface NotEmptyMapObject
+    {
+        Map<Long, Long> getMapValue();
+    }
+
+    private interface NotEmptyStringBuilder
+    {
+        NotEmptyStringBuilder stringValue(@Not({ EMPTY }) String value);
+
+        NotEmptyStringBuiltObject build();
+    }
+
+    private interface NotEmptyStringBuiltObject
     {
         String getStringValue();
     }
