@@ -7,6 +7,8 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -67,6 +69,31 @@ public class NotNullOrEmptyTest
 
         assertThat(actualValue, is(expectedValue));
     }
+    
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotEmptyNotNull_nullMapNotAllowed()
+    {
+        factory.createBuilderForClass(NotNullOrEmptyMapBuilder.class).mapValue(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotEmptyNotNull_emptyMapNotAllowed()
+    {
+        factory.createBuilderForClass(NotNullOrEmptyMapBuilder.class).mapValue(Collections.<Long, Long> emptyMap());
+    }
+
+    @Test
+    public void testNotEmptyNotNull_mapWithValuesAllowed()
+    {
+        Map<Long, Long> map = new HashMap<Long, Long>();
+        map.put(1L, 2L);
+        
+        NotNullOrEmptyMapBuilder builder = factory.createBuilderForClass(NotNullOrEmptyMapBuilder.class);
+        Map<Long, Long> actualValue = builder.mapValue(map).build().getMapValue();
+
+        assertThat(actualValue, is(map));
+    }
 
     private interface NotNullOrEmptyCollectionBuilder
     {
@@ -78,6 +105,18 @@ public class NotNullOrEmptyTest
     private interface NotNullOrEmptyCollectionBuiltObject
     {
         Collection<Long> getCollectionValue();
+    }
+    
+    private interface NotNullOrEmptyMapBuilder
+    {
+        NotNullOrEmptyMapBuilder mapValue(@Not({ NULL, EMPTY }) Map<Long, Long> mapValue);
+
+        NotNullOrEmptyMapBuiltObject build();
+    }
+
+    private interface NotNullOrEmptyMapBuiltObject
+    {
+        Map<Long, Long> getMapValue();
     }
 
     private interface NotNullOrEmptStringBuilder

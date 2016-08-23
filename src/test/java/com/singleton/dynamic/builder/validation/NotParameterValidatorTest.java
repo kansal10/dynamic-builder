@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -132,6 +134,29 @@ public class NotParameterValidatorTest
     public void testNotEmpty_setWithValues()
     {
         NotParameterValidator.EMPTY.validate(Collections.singleton(1L), method);
+    }
+    
+    @Test
+    public void testNotEmpty_emptyMapValue() 
+    { 
+        try
+        {
+            NotParameterValidator.EMPTY.validate(Collections.emptyMap(), method);
+            fail("Expected IllegalArgumentException but none was thrown when empty validation occurred with empty map");
+        }
+        catch (IllegalArgumentException e)
+        {
+            assertThat(e.getMessage(), is(method.getName() + " was provided an empty map, but a non-empty map is required"));
+        }
+    }
+    
+    @Test
+    public void testNotEmpty_mapWithValues() 
+    { 
+        Map<Long, Long> map = new HashMap<Long, Long>();
+        map.put(1L, 2L);
+        
+        NotParameterValidator.EMPTY.validate(map, method);
     }
 
     private interface InterfaceWithMethod
