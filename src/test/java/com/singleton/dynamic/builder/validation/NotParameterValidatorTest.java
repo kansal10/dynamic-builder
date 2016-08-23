@@ -74,7 +74,7 @@ public class NotParameterValidatorTest
     }
 
     @Test
-    public void testNotEmpty_null()
+    public void testNotEmpty_nullValue()
     {
         NotParameterValidator.EMPTY.validate(null, method);
     }
