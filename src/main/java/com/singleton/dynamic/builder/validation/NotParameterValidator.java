@@ -1,13 +1,14 @@
 package com.singleton.dynamic.builder.validation;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 
 import com.singleton.dynamic.builder.validation.exception.MismatchedValidatorTypeException;
 
 /**
  * <p>
- * Enumeration of supported validation types that can be performed in a "not"
- * situation, such as not {@code null} or not empty.
+ * Enumeration of supported validation types that can be performed in a "not" situation, such as not {@code null} or not
+ * empty.
  * </p>
  *
  * @author Dustin Singleton
@@ -51,15 +52,21 @@ public enum NotParameterValidator
                     throw new IllegalArgumentException(method.getName() + " was provided empty, but non empty values are required");
                 }
             }
+
+            if (Collection.class.isAssignableFrom(objectToValidate.getClass()))
+            {
+                if (((Collection<?>) objectToValidate).isEmpty())
+                {
+                    throw new IllegalArgumentException(method.getName() + " was provided an empty collection, but a non-empty collection is required");
+                }
+            }
         }
     };
 
     /**
-     * Validates the specified {@code objectToValidate}. In situations where the
-     * validation does not pass, an {@link IllegalArgumentException} should be
-     * thrown. All implementations should make no assumptions about the
-     * implementation. If the provided {@code objectToValidate} does not match
-     * the supported class types, then an
+     * Validates the specified {@code objectToValidate}. In situations where the validation does not pass, an
+     * {@link IllegalArgumentException} should be thrown. All implementations should make no assumptions about the
+     * implementation. If the provided {@code objectToValidate} does not match the supported class types, then an
      * {@link MismatchedValidatorTypeException} should be thrown.
      * 
      * @param objectToValidate

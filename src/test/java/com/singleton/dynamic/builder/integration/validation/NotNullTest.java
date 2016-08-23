@@ -21,18 +21,18 @@ public class NotNullTest
     @Test(expected = IllegalArgumentException.class)
     public void testNotNull_nullValue()
     {
-        factory.createBuilderForClass(NotNullBuilder.class).stringValue(null);
+        factory.createBuilderForClass(NotNullObjectBuilder.class).stringValue(null);
     }
 
-    private interface NotNullBuilder
+    private interface NotNullObjectBuilder
     {
 
-        NotNullBuilder stringValue(@Not({ NULL }) String value);
+        NotNullObjectBuilder stringValue(@Not({ NULL }) String value);
 
-        NotNullBuiltObject build();
+        NotNullObjectBuiltObject build();
     }
 
-    private interface NotNullBuiltObject
+    private interface NotNullObjectBuiltObject
     {
         String getStringValue();
     }
