@@ -1,3 +1,3 @@
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/Singleton06/dynamic-builder/blob/master/LICENSE)
+[![Apache License 2.0](https://img.shields.io/:license-Apache%20License%202.0-blue.svg?style=plastic)](https://github.com/Singleton06/dynamic-builder/blob/master/LICENSE)
 
 # dynamic-builder
