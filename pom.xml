@@ -4,6 +4,12 @@
     <groupId>com.singleton</groupId>
     <artifactId>com.singleton.dynamic.builder</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/kansal10/dynamic-builder</url>
+    </ciManagement>
+    
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
